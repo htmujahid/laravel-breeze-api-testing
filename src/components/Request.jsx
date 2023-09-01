@@ -1,7 +1,6 @@
 "use client";
 import axios from "@/lib/axios";
 import React, { useState } from "react";
-import useSWR from 'swr'
 
 function Request({setRes}) {
     const [method, setMethod] = useState("GET");
@@ -9,14 +8,14 @@ function Request({setRes}) {
     const [body, setBody] = useState("{}");
 
     async function handleSend() {
-        const data = {
-            method,
-            url,
-            body: method !== "GET" ? JSON.parse(body) : null,
-        };
+        const data = JSON.parse(body);
         let res;
         try {
-            res = await axios(data);
+            res = await axios({
+                method,
+                url,
+                data: method !== "GET" ? data : null,
+            });
             setRes(res);
         } catch (error) {
             setRes(error.response);
@@ -61,7 +60,7 @@ function Request({setRes}) {
                             name="url"
                             id="url"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="http://localhost:3000/api/v1/users"
+                            placeholder="/api/v1/users"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                         />

@@ -16,8 +16,8 @@ function Auth() {
     async function handleLogin() {
         setLoading(true);
         await login({
-            email: "admin@gmail.com",
-            password: "admin@123",
+            email: "test@example.com",
+            password: "password",
             remember: true,
             setErrors,
             setStatus,
